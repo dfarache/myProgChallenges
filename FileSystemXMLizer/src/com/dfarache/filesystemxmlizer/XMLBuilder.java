@@ -81,13 +81,22 @@ public class XMLBuilder {
 
     private Element appendMissingDirectories(Element fatherElement) {
         if (directoryTree.length > treeDepth) {
-            Element directory = doc.createElement("directory");
+            String directoryDepth = directoryDepth();
+            Element directory = doc.createElement(directoryDepth + "directory");
             fatherElement.appendChild(directory);
             setAttribute(directory, "directoryName", directoryTree[treeDepth]);
             treeDepth++;
             return appendMissingDirectories(directory);
         }
         return fatherElement;
+    }
+    
+    private String directoryDepth(){
+        StringBuilder dirDepth = new StringBuilder("sub");
+        for(int i=0;i<treeDepth;i++){
+            dirDepth.append("sub");
+        }
+        return dirDepth.toString();
     }
 
     private Element locateFatherElement(Element element) {

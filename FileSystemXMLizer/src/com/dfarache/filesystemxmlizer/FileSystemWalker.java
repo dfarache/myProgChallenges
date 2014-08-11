@@ -38,6 +38,8 @@ public class FileSystemWalker {
                 IOException exc) {
             FileSystemXMLizer.xml.addFilesAndDirectoryToXML(dir.toString(), filesInDirectory);
             System.out.println(dir.toString());
+            //if(dir.toString().equals("/home/dafarache/Dropbox/cosas/codigo_pfc_bcg/PLUGIN/plugin_vuze/plugin_vuze/messages"))
+              //  FileSystemXMLizer.xml.writeIntoXMLAndClose();
             return FileVisitResult.CONTINUE;
         }
 
