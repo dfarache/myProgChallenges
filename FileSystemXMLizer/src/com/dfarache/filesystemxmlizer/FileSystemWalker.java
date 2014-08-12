@@ -1,5 +1,6 @@
 package com.dfarache.filesystemxmlizer;
 
+import com.dfarache.logTools.LogTools;
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
@@ -8,8 +9,13 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FileSystemWalker {
+    
+    private static final String className = FileSystemWalker.class.getName();
+    private static final Logger log = new LogTools(className).getLogInstace();
     
     public static void startWalking(Path startingPoint) throws IOException {
         Files.walkFileTree(startingPoint, new DirectoryVisitor());
@@ -37,7 +43,7 @@ public class FileSystemWalker {
         public FileVisitResult postVisitDirectory(Path dir,
                 IOException exc) {
             FileSystemXMLizer.xml.addFilesAndDirectoryToXML(dir.toString(), filesInDirectory);
-            System.out.println(dir.toString());
+            log.log(Level.FINE,"Accessing directory {0}", dir.toString());
             //if(dir.toString().equals("/home/dafarache/Dropbox/cosas/codigo_pfc_bcg/PLUGIN/plugin_vuze/plugin_vuze/messages"))
               //  FileSystemXMLizer.xml.writeIntoXMLAndClose();
             return FileVisitResult.CONTINUE;
@@ -45,8 +51,8 @@ public class FileSystemWalker {
 
         @Override
         public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-            System.err.println(exc);
-            return FileVisitResult.CONTINUE;
+            System.err.println(exc); 
+           return FileVisitResult.CONTINUE;
         }
 
         private FileAttributes getCurrentFile(Path file, BasicFileAttributes attrs) {

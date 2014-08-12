@@ -1,7 +1,10 @@
 package com.dfarache.filesystemxmlizer;
 
+import com.dfarache.logTools.LogTools;
 import java.io.File;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -21,6 +24,9 @@ public class XMLBuilder {
     private Element rootElement;
     private String[] directoryTree;
     private static int treeDepth;
+    
+    private static final String className = FileSystemWalker.class.getName();
+    private static final Logger log = new LogTools(className).getLogInstace();
 
     private XMLBuilder() {
         DocumentBuilder docBuilder = instantiateDocBuilder();
@@ -111,7 +117,6 @@ public class XMLBuilder {
                 return locateFatherElement(childElement);
             }
         }
-        System.out.println("element located!!!  " + element.getAttribute("directoryName"));
         return element;
     }
 
@@ -135,7 +140,7 @@ public class XMLBuilder {
 
             transformer.transform(source, result);
         } catch (TransformerException ex) {
-            ex.printStackTrace();
+            log.log(Level.SEVERE, ex.toString());
         }
     }
 
