@@ -22,7 +22,7 @@ public class LogTools{
     
     private FileHandler initialiseFileHandler(String logFile){
         try{
-            return new FileHandler("./" + logFile + ".log");
+            return new FileHandler("./logs/" + logFile + ".log");
         }catch(IOException ex){
             System.err.println("ex");
         }

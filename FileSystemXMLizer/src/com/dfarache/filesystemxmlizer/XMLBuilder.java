@@ -25,7 +25,7 @@ public class XMLBuilder {
     private String[] directoryTree;
     private static int treeDepth;
     
-    private static final String className = FileSystemWalker.class.getName();
+    private static final String className = XMLBuilder.class.getName();
     private static final Logger log = new LogTools(className).getLogInstace();
 
     private XMLBuilder() {
@@ -39,6 +39,7 @@ public class XMLBuilder {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             return docFactory.newDocumentBuilder();
         } catch (ParserConfigurationException ex) {
+            log.log(Level.SEVERE, ex.toString());
             throw new RuntimeException(ex);
         }
     }
@@ -126,6 +127,7 @@ public class XMLBuilder {
         try{
             ans = directoryTree[treeDepth].equals(fileNameAttr);
         }catch(ArrayIndexOutOfBoundsException ex){
+            log.log(Level.FINE, ex.toString());
             return true;
         }
         return ans;

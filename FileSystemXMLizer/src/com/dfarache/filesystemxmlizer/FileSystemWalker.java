@@ -43,15 +43,14 @@ public class FileSystemWalker {
         public FileVisitResult postVisitDirectory(Path dir,
                 IOException exc) {
             FileSystemXMLizer.xml.addFilesAndDirectoryToXML(dir.toString(), filesInDirectory);
-            log.log(Level.FINE,"Accessing directory {0}", dir.toString());
-            //if(dir.toString().equals("/home/dafarache/Dropbox/cosas/codigo_pfc_bcg/PLUGIN/plugin_vuze/plugin_vuze/messages"))
-              //  FileSystemXMLizer.xml.writeIntoXMLAndClose();
+            log.log(Level.INFO,"Accessing directory {0}", dir.toString());
+
             return FileVisitResult.CONTINUE;
         }
 
         @Override
         public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-            System.err.println(exc); 
+           log.log(Level.SEVERE, exc.toString());
            return FileVisitResult.CONTINUE;
         }
 
